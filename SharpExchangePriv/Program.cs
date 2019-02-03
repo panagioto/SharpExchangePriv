@@ -34,7 +34,7 @@ namespace SharpExchangePriv
             string HelpText = "\nUsage: SharpExchangePriv.exe <options>:\n" +
                 "\nOptions:\n" +
                 "\n-t, --targetHost\n" +
-                "\tSet the IP of thetarget host, is mandatory\n" +
+                "\tSet the IP of the target host, is mandatory\n" +
                 "\n" +
                 "-a, --attackerHost\n" +
                 "\tSet the attacker's IP, is mandatory\n" +
