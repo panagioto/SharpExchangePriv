@@ -4,6 +4,8 @@
 
 A C# implementation of PrivExchange by [@_dirkjan](https://twitter.com/_dirkjan). Kudos to [@g0ldenGunSec](https://twitter.com/G0ldenGunSec), as I relied on his code.
 
+It was tested against Exchange 2015.
+
 ## Compile Instructions ## 
 
 SharpExchangePriv has been built against .NET 3.5 and is compatible with Visual Studio 2017. Simply open the solution file and build the project.
