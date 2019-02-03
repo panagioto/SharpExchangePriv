@@ -4,7 +4,7 @@
 
 A C# implementation of PrivExchange by [@_dirkjan](https://twitter.com/_dirkjan). Kudos to [@g0ldenGunSec](https://twitter.com/G0ldenGunSec), as I relied on his code.
 
-It was tested against Exchange 2015.
+It was tested against Exchange 2013.
 
 ## Compile Instructions ## 
 

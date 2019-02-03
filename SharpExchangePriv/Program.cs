@@ -49,7 +49,7 @@ namespace SharpExchangePriv
                 "\tEnable SSL\n" +
                 "\n" +
                 "-v, --exchangeVersion\n" +
-                "\tSet Exchange version, default is 2015\n" +
+                "\tSet Exchange version, default is 2013\n" +
                 "\n" +
                 "-e, --exchangePort\n" +
                 "\tSet Exchange target port\n" +
@@ -185,7 +185,7 @@ namespace SharpExchangePriv
             var Options = new Options();
 
             bool SSL = true;
-            string ExchangeVersion = "2015";
+            string ExchangeVersion = "2013";
             string ExchangePort = "443";
             string AttackerPort = "80";
             string AttackerPage = "powerPriv";
