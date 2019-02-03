@@ -1,0 +1,99 @@
+﻿Die Kommandozeile
+
+
+Die Kommandozeile dient dem starten von Programmen und besteht aus folgenden Teilen:
+<PROGRAMMNAME> und [PARAMETER].
+Die Parameter unterteilen sich in die ARGUMENTE (ohne vorangestelltem Token) und OPTIONEN (mit vorangestelltem Token) 
+wobei die ARGUMENTE immer als erstes kommen und bei mehreren die Reihenfolge relevant ist und bei den OPTIONEN nicht. 
+Die OPTIONEN haben alle ausnahmslos ein vorangestelltes TOKEN dem ein oder mehrere Zeichen (a-z | A-Z) folgen.
+Bei den OPTIONEN unterscheide ich die mit Werten und die ohne Werte (SWITCH). 
+Der SWITCH hat in aller Regel einen boolschen Wert und muss nicht explizit angegeben werden, da das vorhandensein als True und das fehlen als False gewertet wird.
+
+Unter UNIX sind zwei TOKEN besonders verbreitet: - und --.
+In der Regel kommt nach einem - immer nur ein Buchstabe (ALIAS) und nach -- immer mehrere Buchstaben (Name), einen Sonderfall bildet hier der gruppierte ALIAS. 
+Mehrere ALIASE werden hintereinander geschrieben z. B. : -PosT anstatt -P -o -s -T
+
+Unter Windows wurde bisher eigentlich immer / verwendet. Ein gruppierter ALIAS wurde nicht Unterstützt.
+
+Bisher unterstütze ich folgende SCHEMA:
+
+ARGUMENTE:
+Hallo Welt		sind zwei Argumente Hallo und Welt. Gültige Zeichen sind a-zA-Z_0-9 was dem /w in RegularExpression gleichkommt.
+"Hallo Welt"	ist ein Argument. Gültige Zeichen sind hier alle Zeichen zwischen 0x20 und 0xBE wobei das " maskiert werden muss \"
+
+Ab hier wird die Groß bzw Kleinschreibung bei den Optionen unterschieden.
+SWITCH:
+-p				ist ein Alias Switch. Gültige Zeichen sind hier a-zA-Z
+-abc			sind drei Alias Switche a b und c. Gültige Zeichen sind hier a-zA-Z
+--Print			ist ein Name Switch Print. Gültige Zeichen sind hier a-zA-Z
+/p				
+/Print			
+
+OPTION:
+				Für Optionen gilt das auch mehrere Werte hintereinander durch , oder ; getrennt angegeben werden können
+				Für die Automatische Zuweisung zu einem Objekt wird jedoch nur der erste Wert benutzt, da noch keine Unterstütztung vorhanden ist.
+
+-p Text			ist eine alias Option mit dem Wert Text. Für den Wert gelten die selben Regeln wie für die ARGUMENTE
+-p:Text
+-p=Text			als Trennzeichen zwischen dem Alias und dem Wert sind das Leerzeichen, die doppel Punkte und das Gleichheitszeichen erlaubt
+-p "T e x t"	ist eine alias Option mit dem Wert Text. Für den Wert gelten die selben Regeln wie für die ARGUMENTE
+/p Text			ist eine alias Option mit dem Wert Text. Für den Wert gelten die selben Regeln wie für die ARGUMENTE
+
+--Print Text	ist eine Name Option.
+--Print:Text
+--Print=Text
+/Print Text		ist eine Name Option.
+
+--print Text	ist eine andere Option
+
+Verwendung im Code:
+Die Argumente args werden zur Laufzeit automatisch ermittelt.
+
+			string argumentValue0 = Commandline.GetArgumentValue(0);
+			string argumentValue1 = Commandline.GetArgumentValue(1);
+			string[] optionValueO = Commandline.GetOptionValue("option", "o");
+			string[] optionValueS = Commandline.GetOptionValue("soption", "s");
+			bool switchValue = Commandline.GetSwitchValue("switch", "s");
+oder
+			CommandlineResolver.Assign(objectWithAttributesToInitialize);
+oder
+Hier werden die Argumente benutzt die beim Aufruf übergeben werden.
+			CommandlineResolver.Assign(objectWithAttributesToInitialize, args);
+
+Um die automatische Zuweisung der Kommandozeile zu einem Object zu verwenden, müssen Attribute auf public Properties gesetzt werden.
+Die Attribute befinden sich im Namespace: Company.Commandline.Attributes
+
+ArgumentAttribute
+	Position		indexbasiert
+	Mandantory		Muss das Argument auf der Kommandozeile angegeben werden
+	Description		Beschreibung des Arguments. 
+	[DefaultValue]	Wert der Zugewiesen werden soll wenn das Argument nicht angegeben wurde und das Argument nicht Mandantory ist
+
+OptionAttribute
+	Name			Der Name der option wie auf der kommandozeile einzugeben ohne Token (- -- /)
+	Description		Bescreibung der Option.
+	Mandantory		Muss die Option auf der Kommandozeile angegeben werden
+	[Alias]			Die kurzform für die Option. Ein Buchstabe
+	[DefaultValue]	Wert der Zugewiesen werden soll wenn Option nicht angegeben wurde und die Option nicht Mandantory ist
+
+SwitchAttribute
+	Name			Der Name des Switches wie auf der Kommandozeile einzugeben ohne Token (- -- /)
+	Description		Beschreibung des Switches
+	Mandantory		Muss der Switch auf der Kommandozeile angegeben werden
+	[Alias]			Die kurzform für den Switch. Wird ausgewertet wenn die Switche gruppiert werden. Ein Buchstabe
+	[DefaultValue]	Wert der Zugewiesen werden soll wenn der Switch nicht angegeben wurde und der Switch nicht Mandantory ist
+
+Zur Zeit wird die Description nicht ausgewertet. Geplant ist aber eine Ausgabe der einzelnen Attribute
+
+Unterstützte Datentypen
+Zur Zeit werden unterstützt:
+	Enum			Auch Nullable
+					Groß/Keleinschreibung wird nicht beachtet
+	
+	Primitive		Auch Nullable (Boolean, Byte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64, IntPtr, UIntPtr, Char, Double, Single)
+					Wenn Gleitkommazahlen verwendet werden sollen, müssen diese zwischen " stehen da nur dann das Trennzeichen angegeben werden kann.
+	
+	String
+
+Der Quellcode ist so aufgebaut das Erweiterungen möglich sind. Beispiele werden folgen.
+Als Techniken verwende ich MEF und geplant ist IoC. Für die Ermittlung der verschiedenen Parameter benutze ich Regular Expressions.
