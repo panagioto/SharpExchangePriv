@@ -38,7 +38,7 @@ Enable SSL
 
 #### `--exchangeVersion`
 
-Set Exchange version, default is 2015
+Set Exchange version, default is 2016
 
 #### `--exchangePort`
 
