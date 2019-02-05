@@ -49,7 +49,7 @@ namespace SharpExchangePriv
                 "\tEnable SSL\n" +
                 "\n" +
                 "-v, --exchangeVersion\n" +
-                "\tSet Exchange version, default is 2013\n" +
+                "\tSet Exchange version, default is 2016\n" +
                 "\n" +
                 "-e, --exchangePort\n" +
                 "\tSet Exchange target port\n" +
@@ -166,7 +166,7 @@ namespace SharpExchangePriv
             [Option("s", "ssl", Required = false, HelpText = "Enable ssl")]
             public bool SSL { get; set; }
 
-            [Option("v", "exchangeVersion", Required = false, HelpText = "Set Exchange version, default is 2013")]
+            [Option("v", "exchangeVersion", Required = false, HelpText = "Set Exchange version, default is 2016")]
             public string ExchangeVersion { get; set; }
 
             [Option("e", "exchangePort", Required = false, HelpText = "Set Exchange target port")]
@@ -185,7 +185,7 @@ namespace SharpExchangePriv
             var Options = new Options();
 
             bool SSL = true;
-            string ExchangeVersion = "2013";
+            string ExchangeVersion = "2016";
             string ExchangePort = "443";
             string AttackerPort = "80";
             string AttackerPage = "powerPriv";
