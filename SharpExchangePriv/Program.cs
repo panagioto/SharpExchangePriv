@@ -64,7 +64,7 @@ namespace SharpExchangePriv
 
             //building out exchange server target URL
             string URL = "";
-            if (SSL)
+            if (!SSL)
             {
                 URL = "http://" + targetHost + ":" + ExchangePort + "/EWS/Exchange.asmx";
             }
