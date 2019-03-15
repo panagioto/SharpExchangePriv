@@ -66,11 +66,11 @@ namespace SharpExchangePriv
             string URL = "";
             if (SSL)
             {
-                URL = "http://" + targetHost + ":" + ExchangePort + "/EWS/Exchange.asmx";
+                URL = "https://" + targetHost + ":" + ExchangePort + "/EWS/Exchange.asmx";
             }
             else
             {
-                URL = "https://" + targetHost + ":" + ExchangePort + "/EWS/Exchange.asmx";
+                URL = "http://" + targetHost + ":" + ExchangePort + "/EWS/Exchange.asmx";
             }
             
             Console.WriteLine("The target URL is {0}\n", URL);
